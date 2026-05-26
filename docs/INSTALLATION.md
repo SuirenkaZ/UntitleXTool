@@ -2,60 +2,53 @@
 
 ## English
 
-### 1. Status and Supported Environment
+### 1. Supported Packages
 
-This is a beta/pre-release build intended for testing installation, licensing, and production workflows.
+This is the `v1.0.0.0-beta` pre-release build for Windows. Each Maya version has its own installation package because Maya versions use different Python runtimes and compiled bytecode.
 
-| Item | Current Support |
-| --- | --- |
-| Operating system | Windows |
-| Available Maya package | Autodesk Maya 2022 |
-| Installation method | Drag `install.py` into the Maya window |
-| Current release | `v1.0.0.0-beta` |
-| Maya 2022 asset | `UntitleXTool_1.0.0.0-beta_Maya2022_pyc.zip` |
+| Maya | Python Runtime | Package |
+| --- | --- | --- |
+| Maya 2022 | Python 3.7 | [Download ZIP](https://github.com/SuirenkaZ/UntitleXTool/releases/download/v1.0.0.0-beta/UntitleXTool_1.0.0.0-beta_Maya2022_pyc.zip) |
+| Maya 2023 | Python 3.9 | [Download ZIP](https://github.com/SuirenkaZ/UntitleXTool/releases/download/v1.0.0.0-beta/UntitleXTool_1.0.0.0-beta_Maya2023_pyc.zip) |
+| Maya 2024 | Python 3.10 | [Download ZIP](https://github.com/SuirenkaZ/UntitleXTool/releases/download/v1.0.0.0-beta/UntitleXTool_1.0.0.0-beta_Maya2024_pyc.zip) |
+| Maya 2025 | Python 3.11 | [Download ZIP](https://github.com/SuirenkaZ/UntitleXTool/releases/download/v1.0.0.0-beta/UntitleXTool_1.0.0.0-beta_Maya2025_pyc.zip) |
+| Maya 2026 | Python 3.11 | [Download ZIP](https://github.com/SuirenkaZ/UntitleXTool/releases/download/v1.0.0.0-beta/UntitleXTool_1.0.0.0-beta_Maya2026_pyc.zip) |
 
-Every Maya version must use its matching ZIP asset. A package compiled for Maya 2022 must not be installed into Maya 2023, 2024, or 2025.
+Do not install a package intended for another Maya version.
 
-### 2. Release and Maya Package Layout
+### 2. Package Verification
 
-One UntitleXTool software version is represented by one GitHub Release. That Release contains one asset for each supported Maya version:
-
-```text
-Release: v1.0.0.0-beta
-- UntitleXTool_1.0.0.0-beta_Maya2022_pyc.zip   Available
-- UntitleXTool_1.0.0.0-beta_Maya2023_pyc.zip   Added when available
-- UntitleXTool_1.0.0.0-beta_Maya2024_pyc.zip   Added when available
-- UntitleXTool_1.0.0.0-beta_Maya2025_pyc.zip   Added when available
-```
-
-When only Maya compatibility is added without changing the software version, an additional asset is added to the existing Release. When features, bug fixes, licensing behavior, or installation behavior changes, a new Release is created and new matching Maya assets are uploaded.
-
-### 3. Download and Verify
-
-Download the asset matching your Maya version from [GitHub Releases](https://github.com/SuirenkaZ/UntitleXTool/releases). The currently available package is:
-
-- Maya 2022: [UntitleXTool_1.0.0.0-beta_Maya2022_pyc.zip](https://github.com/SuirenkaZ/UntitleXTool/releases/download/v1.0.0.0-beta/UntitleXTool_1.0.0.0-beta_Maya2022_pyc.zip)
-
-Verify the Maya 2022 package in PowerShell:
+Run the following command in PowerShell after downloading a package:
 
 ```powershell
-Get-FileHash -Algorithm SHA256 .\UntitleXTool_1.0.0.0-beta_Maya2022_pyc.zip
+Get-FileHash -Algorithm SHA256 .\UntitleXTool_1.0.0.0-beta_Maya2024_pyc.zip
 ```
 
-Expected value:
+Replace the filename for your Maya version and compare the result below:
+
+| Maya | SHA-256 |
+| --- | --- |
+| Maya 2022 | `026044F714869816AFD83650CD63B7606CEB6C3B7521C27B152BA0965A7E42F4` |
+| Maya 2023 | `8DCDC49E01B959ABDF68FE53F00E9A741898C0AF25D1E8360689325AD78C0F5C` |
+| Maya 2024 | `328537018E35B23C64CFA8191022511240D8CA304F0C3AE747EF5AB717DA16CF` |
+| Maya 2025 | `70ABB43F6FAD6160E645B1D01CB30A02AF023C00DFF4C5D58C1166F259537BC3` |
+| Maya 2026 | `48F5D395B9C8AEDAE20ADF1171A86863561A360A7F702C928DC656FCDEF4EFD0` |
+
+Do not install a file whose hash does not match.
+
+### 3. Installation
+
+1. Download the ZIP matching your Maya version and fully extract it to a local folder.
+2. Confirm the extracted directory contains both `install.py` and the `UntitleXTool` folder.
+3. Start the corresponding Autodesk Maya version.
+4. Drag `install.py` into the Maya main window or viewport.
+5. Confirm the detected Maya version and user scripts directory, then click `Install / Update`.
+6. Open `UntitleXTool WorkBench` from the `UntitleTool` shelf.
+
+Expected extracted structure:
 
 ```text
-026044F714869816AFD83650CD63B7606CEB6C3B7521C27B152BA0965A7E42F4
-```
-
-If the value differs, delete the file and download it again before installation.
-
-### 4. Extracted Package Structure
-
-Extract the ZIP completely to a local folder before installation. The expected Maya 2022 structure is:
-
-```text
-UntitleXTool_1.0.0.0-beta_Maya2022_pyc/
+UntitleXTool_<version>_Maya<year>_pyc/
 |-- install.py
 |-- README.txt
 `-- UntitleXTool/
@@ -65,97 +58,82 @@ UntitleXTool_1.0.0.0-beta_Maya2022_pyc/
     `-- ...
 ```
 
-Keep `install.py` and the `UntitleXTool` folder at the same level. Do not drag a file directly out of an unopened ZIP preview.
+Keep `install.py` beside the full `UntitleXTool` folder. Do not run it directly from a ZIP preview.
 
-### 5. Installation
+### 4. License, Updating, and Removal
 
-1. Start the Maya version matching the downloaded package. For the current asset, start Autodesk Maya 2022.
-2. Drag the extracted `install.py` into the Maya main window or viewport.
-3. The installer detects the running Maya version and its user scripts location.
-4. Confirm that the detected Maya version matches the ZIP asset, then click `Install / Update`.
-5. After completion, open `UntitleXTool WorkBench` from the `UntitleTool` shelf.
+To activate licensed features, open `Settings > Plugin Settings > License` in WorkBench, enter the License Key received after purchase, and click `Activate`. Never include a License Key or `.lic` file in public screenshots or issues.
 
-When updating, the installer backs up the existing installed tool directory before replacing it.
+For an update, download the newest Release asset for the same Maya version and run its `install.py` again. The installer backs up the installed tool directory before replacement.
 
-### 6. License Activation
+To uninstall, use the removal action in the `UntitleTool` shelf and restart Maya when complete. Back up custom presets first if required.
 
-1. Open `UntitleXTool WorkBench`.
-2. Go to `Settings > Plugin Settings > License`.
-3. Enter the License Key received after purchase and click `Activate`.
-4. Licensed features are available after activation succeeds.
+### 5. Release Layout
 
-License Keys and `.lic` files are personal license information. Never include them in public issues, logs, or screenshots.
+A software change creates a new Release. Additional Maya compatibility for unchanged software is added as another asset in the existing Release:
 
-### 7. Update and Uninstall
+```text
+Release: v1.0.0.0-beta
+- UntitleXTool_1.0.0.0-beta_Maya2022_pyc.zip
+- UntitleXTool_1.0.0.0-beta_Maya2023_pyc.zip
+- UntitleXTool_1.0.0.0-beta_Maya2024_pyc.zip
+- UntitleXTool_1.0.0.0-beta_Maya2025_pyc.zip
+- UntitleXTool_1.0.0.0-beta_Maya2026_pyc.zip
+```
 
-For an update, download the latest Release asset matching your Maya version, extract it, and run its `install.py` again. Do not select an asset for another Maya version.
-
-To uninstall, use the removal action in the `UntitleTool` shelf and restart Maya after the uninstall finishes. Back up any custom presets you need to preserve before removal.
-
-### 8. Troubleshooting and Issue Reports
-
-If the installer does not open, confirm the ZIP was fully extracted and `install.py` remains beside the full `UntitleXTool` folder. If the shelf does not appear, restart Maya and verify that the installed scripts path belongs to the intended Maya version. If activation fails, check network access and enter the complete License Key again without sharing it publicly.
-
-For issues, provide your Windows version, Maya version, package filename, reproducible steps, and screenshots without license or credential data in [GitHub Issues](https://github.com/SuirenkaZ/UntitleXTool/issues).
+For reproducible issues, submit a [GitHub Issue](https://github.com/SuirenkaZ/UntitleXTool/issues) with the Windows version, Maya version, package filename, steps, and screenshots without license or credential data.
 
 ---
 
 ## 中文
 
-### 1. 发布状态与适用环境
+### 1. 支持的安装包
 
-当前为内测版本，用于验证实际制作流程中的安装、授权与工具使用体验。
+当前为 Windows 平台的 `v1.0.0.0-beta` 内测发布版本。由于不同 Maya 版本使用不同 Python 运行时与编译字节码，每个 Maya 版本均有独立安装包。
 
-| 项目 | 当前支持范围 |
-| --- | --- |
-| 操作系统 | Windows |
-| 已提供的 Maya 安装包 | Autodesk Maya 2022 |
-| 安装方式 | 将 `install.py` 拖入 Maya 窗口 |
-| 当前发布版本 | `v1.0.0.0-beta` |
-| Maya 2022 附件 | `UntitleXTool_1.0.0.0-beta_Maya2022_pyc.zip` |
+| Maya | Python 运行时 | 安装包 |
+| --- | --- | --- |
+| Maya 2022 | Python 3.7 | [下载 ZIP](https://github.com/SuirenkaZ/UntitleXTool/releases/download/v1.0.0.0-beta/UntitleXTool_1.0.0.0-beta_Maya2022_pyc.zip) |
+| Maya 2023 | Python 3.9 | [下载 ZIP](https://github.com/SuirenkaZ/UntitleXTool/releases/download/v1.0.0.0-beta/UntitleXTool_1.0.0.0-beta_Maya2023_pyc.zip) |
+| Maya 2024 | Python 3.10 | [下载 ZIP](https://github.com/SuirenkaZ/UntitleXTool/releases/download/v1.0.0.0-beta/UntitleXTool_1.0.0.0-beta_Maya2024_pyc.zip) |
+| Maya 2025 | Python 3.11 | [下载 ZIP](https://github.com/SuirenkaZ/UntitleXTool/releases/download/v1.0.0.0-beta/UntitleXTool_1.0.0.0-beta_Maya2025_pyc.zip) |
+| Maya 2026 | Python 3.11 | [下载 ZIP](https://github.com/SuirenkaZ/UntitleXTool/releases/download/v1.0.0.0-beta/UntitleXTool_1.0.0.0-beta_Maya2026_pyc.zip) |
 
-每个 Maya 版本必须使用其对应的 ZIP 附件。为 Maya 2022 编译的安装包不能安装到 Maya 2023、2024 或 2025 中混用。
+请勿将一个 Maya 版本的安装包安装到其他 Maya 版本中。
 
-### 2. 发布版本与 Maya 安装包结构
+### 2. 文件校验
 
-一个 UntitleXTool 软件版本对应一个 GitHub Release。同一个 Release 中，按支持的 Maya 版本分别放置安装包附件：
-
-```text
-Release: v1.0.0.0-beta
-- UntitleXTool_1.0.0.0-beta_Maya2022_pyc.zip   已发布
-- UntitleXTool_1.0.0.0-beta_Maya2023_pyc.zip   可用后添加
-- UntitleXTool_1.0.0.0-beta_Maya2024_pyc.zip   可用后添加
-- UntitleXTool_1.0.0.0-beta_Maya2025_pyc.zip   可用后添加
-```
-
-如果软件代码未变化，只新增 Maya 版本兼容包，则将对应附件加入已有 Release。如果功能、修复内容、授权逻辑或安装逻辑发生变化，则创建新的 Release，并上传新版本对应的 Maya 附件。
-
-### 3. 下载与校验
-
-请从 [GitHub Releases](https://github.com/SuirenkaZ/UntitleXTool/releases) 中选择与你的 Maya 版本一致的附件。当前已提供：
-
-- Maya 2022：[UntitleXTool_1.0.0.0-beta_Maya2022_pyc.zip](https://github.com/SuirenkaZ/UntitleXTool/releases/download/v1.0.0.0-beta/UntitleXTool_1.0.0.0-beta_Maya2022_pyc.zip)
-
-在 PowerShell 中校验 Maya 2022 安装包：
+下载完成后，在 PowerShell 中运行：
 
 ```powershell
-Get-FileHash -Algorithm SHA256 .\UntitleXTool_1.0.0.0-beta_Maya2022_pyc.zip
+Get-FileHash -Algorithm SHA256 .\UntitleXTool_1.0.0.0-beta_Maya2024_pyc.zip
 ```
 
-校验结果应为：
+请按你的 Maya 版本替换文件名，并与以下结果比较：
+
+| Maya | SHA-256 |
+| --- | --- |
+| Maya 2022 | `026044F714869816AFD83650CD63B7606CEB6C3B7521C27B152BA0965A7E42F4` |
+| Maya 2023 | `8DCDC49E01B959ABDF68FE53F00E9A741898C0AF25D1E8360689325AD78C0F5C` |
+| Maya 2024 | `328537018E35B23C64CFA8191022511240D8CA304F0C3AE747EF5AB717DA16CF` |
+| Maya 2025 | `70ABB43F6FAD6160E645B1D01CB30A02AF023C00DFF4C5D58C1166F259537BC3` |
+| Maya 2026 | `48F5D395B9C8AEDAE20ADF1171A86863561A360A7F702C928DC656FCDEF4EFD0` |
+
+校验值不一致的文件不要继续安装。
+
+### 3. 安装步骤
+
+1. 下载与你的 Maya 版本匹配的 ZIP，并完整解压到本地文件夹。
+2. 确认解压目录中同时存在 `install.py` 与 `UntitleXTool` 文件夹。
+3. 启动对应版本的 Autodesk Maya。
+4. 将 `install.py` 拖入 Maya 主窗口或视图区域。
+5. 确认安装器识别的 Maya 版本和用户 scripts 目录后，点击“安装 / 更新”。
+6. 安装完成后，在 `UntitleTool` shelf 中打开 `UntitleXTool WorkBench`。
+
+正确的解压结构如下：
 
 ```text
-026044F714869816AFD83650CD63B7606CEB6C3B7521C27B152BA0965A7E42F4
-```
-
-如果校验值不一致，请删除该文件并重新下载，不要继续安装。
-
-### 4. 解压后的目录结构
-
-安装前必须将 ZIP 完整解压到普通本地文件夹。Maya 2022 安装包的正确结构如下：
-
-```text
-UntitleXTool_1.0.0.0-beta_Maya2022_pyc/
+UntitleXTool_<version>_Maya<year>_pyc/
 |-- install.py
 |-- README.txt
 `-- UntitleXTool/
@@ -165,35 +143,27 @@ UntitleXTool_1.0.0.0-beta_Maya2022_pyc/
     `-- ...
 ```
 
-`install.py` 与 `UntitleXTool` 文件夹必须保持在同一层级。不要只复制 `install.py`，也不要直接从压缩包预览窗口拖拽运行。
+`install.py` 与完整的 `UntitleXTool` 文件夹必须保持在同一层级，不要从压缩包预览窗口中直接运行。
 
-### 5. 安装步骤
+### 4. License、更新与卸载
 
-1. 启动与你下载的安装包对应的 Maya 版本；当前附件请启动 Autodesk Maya 2022。
-2. 将解压后的 `install.py` 拖入 Maya 主窗口或视图区域。
-3. 安装器会识别正在运行的 Maya 版本及对应的用户 scripts 路径。
-4. 确认识别到的 Maya 版本与 ZIP 附件一致后，点击“安装 / 更新”。
-5. 安装完成后，在 `UntitleTool` shelf 中打开 `UntitleXTool WorkBench`。
+需要激活授权功能时，在 WorkBench 中打开 `设置 > 插件设置 > License`，输入购买后获得的 License Key 并点击“激活”。不要在公开截图或 Issue 中提供 License Key 与 `.lic` 文件。
 
-执行更新安装时，安装器会在覆盖前备份已安装的工具目录。
+更新时，请下载最新 Release 中与你的 Maya 版本一致的附件，解压后重新运行 `install.py`。安装器会在替换前备份已有工具目录。
 
-### 6. License 激活
+卸载时，请使用 `UntitleTool` shelf 中的删除入口，完成后重启 Maya；如果存在需要保留的自定义预设，请提前备份。
 
-1. 打开 `UntitleXTool WorkBench`。
-2. 进入 `设置 > 插件设置 > License`。
-3. 输入购买后获得的 License Key，并点击“激活”。
-4. 激活成功后即可使用已授权功能。
+### 5. 发布结构
 
-License Key 与 `.lic` 文件属于个人授权资料。不要在公开 Issue、日志或截图中发送这些内容。
+软件内容发生变化时创建新的 Release；如果软件内容未变，只增加对某个 Maya 版本的支持，则将新附件添加到现有 Release：
 
-### 7. 更新与卸载
+```text
+Release: v1.0.0.0-beta
+- UntitleXTool_1.0.0.0-beta_Maya2022_pyc.zip
+- UntitleXTool_1.0.0.0-beta_Maya2023_pyc.zip
+- UntitleXTool_1.0.0.0-beta_Maya2024_pyc.zip
+- UntitleXTool_1.0.0.0-beta_Maya2025_pyc.zip
+- UntitleXTool_1.0.0.0-beta_Maya2026_pyc.zip
+```
 
-更新时，请下载最新 Release 中与你的 Maya 版本匹配的附件，完整解压后再次运行其中的 `install.py`。不要选择其他 Maya 版本的附件。
-
-卸载时，请使用 `UntitleTool` shelf 中的删除入口，并在卸载完成后重启 Maya。若需要保留自定义配置或预设，请在卸载前进行备份。
-
-### 8. 问题排查与反馈
-
-如果拖拽后安装器没有出现，请确认 ZIP 已完整解压，并且 `install.py` 旁边仍有完整的 `UntitleXTool` 文件夹。如果找不到 shelf，请重启 Maya 并确认安装 scripts 路径属于目标 Maya 版本。如果 License 激活失败，请检查网络并重新输入完整 Key，不要公开发送 Key。
-
-提交问题时，请在 [GitHub Issues](https://github.com/SuirenkaZ/UntitleXTool/issues) 中提供 Windows 版本、Maya 版本、安装包文件名、可复现步骤及不含授权或凭证信息的截图。
+如需反馈可复现的问题，请提交 [GitHub Issue](https://github.com/SuirenkaZ/UntitleXTool/issues)，并提供 Windows 版本、Maya 版本、安装包文件名、复现步骤及不含授权或凭证信息的截图。
